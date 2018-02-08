@@ -1,27 +1,31 @@
 import { Component, OnInit } from '@angular/core';
+import { HeroService } from './marvel-hero.service';
 
 @Component({
   selector: 'app-marvel-heroes',
   templateUrl: './marvel-heroes.component.html',
-  styleUrls: ['./marvel-heroes.component.css']
+  styleUrls: ['./marvel-heroes.component.css'],
+  providers: [ HeroService ]
 })
 export class MarvelHeroesComponent implements OnInit {
-
-  heroes = ['Iron Man', 'Spider Man', 'Black Panther', 'Ant Man'];
+  heroes: string[];
   inputHero = null;
   btnDisable = false;
   Adding = false;
 
-  ChangeHero() {
-    this.heroes = this.inputHero;
+  AddHero() {
+    this.heroes.push(this.inputHero);
     this.inputHero = null;
+    this.Adding = false;
   }
 
   AddMore() {
     this.Adding = !this.Adding;
   }
 
-  constructor() { }
+  constructor(private ajax: HeroService) {
+    this.heroes = this.ajax.heroes;
+   }
 
   ngOnInit() {
   }
